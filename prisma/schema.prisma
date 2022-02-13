@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ingredients {
+  id                 Int                  @id(map: "ingredients_pk") @unique(map: "ingredients_id_uindex") @default(autoincrement())
+  name               String               @unique(map: "ingredients_name_uindex")
+  recipe_ingredients recipe_ingredients[]
+}
+
+model measurements {
+  id                 Int                  @id(map: "measurements_pk") @unique(map: "measurements_id_uindex") @default(autoincrement())
+  name               String               @unique(map: "measurements_name_uindex")
+  recipe_ingredients recipe_ingredients[]
+}
+
+model recipe_ingredients {
+  id               Int          @id(map: "recipe_ingredients_pk") @unique(map: "recipe_ingredients_id_uindex") @default(autoincrement())
+  recipe_id        Int
+  ingredient       Int
+  measurement      Decimal?     @db.Decimal
+  measurement_type Int
+  size             String?
+  ingredients      ingredients  @relation(fields: [ingredient], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recipe_ingredients_ingredients_id_fk")
+  measurements     measurements @relation(fields: [measurement_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recipe_ingredients_measurements_id_fk")
+  recipes          recipes      @relation(fields: [recipe_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "recipe_ingredients_recipes_id_fk")
+}
+
+model recipes {
+  id                 Int                  @id(map: "recipes_pk") @unique(map: "recipes_id_uindex") @default(autoincrement())
+  name               String               @unique(map: "recipes_name_uindex")
+  recipe_code        String?
+  recipe_ingredients recipe_ingredients[]
+}

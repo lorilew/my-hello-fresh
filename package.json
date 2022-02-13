@@ -2,18 +2,24 @@
   "name": "my-hello-fresh",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@prisma/client": "^3.9.2",
+    "antd": "^4.18.6",
     "next": "12.0.10",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^7.3.2",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "eslint": "8.9.0",
-    "eslint-config-next": "12.0.10"
+    "eslint": "^5.16.0",
+    "eslint-config-next": "12.0.10",
+    "prisma": "^3.9.2"
   }
 }
